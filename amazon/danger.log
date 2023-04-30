@@ -1,0 +1,8 @@
+1. Users are required to login in before performing any actions in home page
+2. Error messages will be displayed when users try to violate rules in register, i.e. user name should be unique and under 150 characters, using letters, digits and @/./+/-/_ only, and password should be on a strong level combination to ensure security.
+3. Extra confirmation is needed if a user wants to buy an item directly.
+4. Checkout button is hidden if there are no items in the shopping cart.
+5. Users without logging in can not access pages through URLs.
+6. In the backend, we add lock to prevent the case where we iterate through a global dictionary, its length may change since other threads might add or delete an element of the same dictionary. 
+7. When receiving messages, we check if the message is empty in the first place to avoid errors.
+8. We send ups_account to UPS server only if it exists.

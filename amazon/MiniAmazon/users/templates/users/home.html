@@ -1,0 +1,43 @@
+{% extends "users/base.html" %}
+{% block content %}
+
+<h1>Welcome to Amazon</h1>
+<div class="container my-5">
+    <h2 style="color: #335; font-family: 'Lucida Handwriting', cursive; font-size: 26px; font-style: italic; margin-bottom: 30px;">Discover What's New</h2>
+    <div class="row">
+      {% for product in products %}
+      <div class="col-md-4">
+        <div class="card mb-4 box-shadow">
+          <img class="card-img-top" src="{{ product.picture.url }}" alt="{{ product.name }}">
+          <div class="card-body">
+            <h5 class="card-title">{{ product.name }}</h5>
+            <p class="card-text">${{ product.price }}</p>
+            <div class="d-flex justify-content-between align-items-center">
+              <div class="btn-group">
+                {% if user.is_authenticated %}
+                  <form action="{% url 'handle_cart' product_id=product.product_id %}" method="POST" data-product-name="{{ product.name }}">
+                    {% csrf_token %}
+                    <input type="hidden" name="product_id" value="{{ product.product_id }}">
+                    <button type="submit" name="action" value="buy" class="btn btn-primary" onclick="return confirmBuy(this.form);">Buy Now</button>
+                  </form>
+                {% else %}
+                  <a href="{% url 'login' %}" class="btn btn-primary">Log in to buy</a>
+                {% endif %}
+
+                <script>
+                  function confirmBuy(form) {
+                    var productName = form.getAttribute('data-product-name');
+                    var message = 'Are you sure you want to buy ' + productName + '?';
+                    return confirm(message);
+                  }
+                </script>
+              </div>
+              <small class="text-muted">{{ product.sales }} sales</small>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+{% endblock content%}

@@ -1,0 +1,23 @@
+1. Trending Item Homepage
+We design a trending item homepage. Users can buy these recommended products instantly if they want.
+
+2. Search Bar (search by vague name, categories, price range)
+Products can be searched by: vague product name, categories and price range
+And sorted by price and sales(low to high/high to low)
+
+3. Shopping Cart
+Customers can add their desired products to the shopping cart, view and remove items from the cart, and place an order with all the products in the cart.
+
+4. Star Rating
+a. Customers can rate products they purchased after the order is complete. The rate score is in the range from 1 to 5.
+b. Ratings will be updated and viewed on the product page. If there are no people rating this item, the default star rate is 5.
+
+5. Reward Points
+We add a reward points mechanism to encourage purchasement. Customers get 1% credit back on all purchases, and the points will be displayed on the user profile page.
+
+6. Email
+a. Our server will send email notifying the corresponding customer when order is successfully placed, shipped, and delivered.
+b. The email includes information including order id, product details and total price.
+
+7. User Profile(with an avatar)
+In the profile page, users can view and modify their email address, bank account, ups account and delivery address. 

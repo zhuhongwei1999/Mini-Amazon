@@ -1,0 +1,42 @@
+{% extends 'users/base.html' %}
+
+{% block content %}
+
+<div class="container">
+  <h1>Shopping Cart</h1>
+  {% if cart %}
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Product</th>
+          <th>Price</th>
+          <th>Quantity</th>
+          <th>Subtotal</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in cart %}
+        <tr>
+          <td>{{ item.product.name }}</td>
+          <td>{{ item.product.price }}</td>
+          <td>{{ item.quantity }}</td>
+          <td>{{ item.subtotal }}</td>
+          <td>
+            <a href="{% url 'delete_cart_item' item.id %}" class="btn btn-danger">Remove</a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% if total_price != 0 %}
+    <div class="text-right">
+      <h4>Total: {{ total_price }}</h4>
+      <a href="{% url 'checkout' %}" class="btn btn-primary">Checkout</a>
+    </div>
+    {% endif %}
+  {% else %}
+    <p>Your shopping cart is empty.</p>
+  {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends 'users/base.html' %}
+
+{% block content %}
+<div class="container">
+  <h1>Current Orders</h1>
+  {% for order in orders %}
+  <h4>Tracking Number: {{ order.tracking_num }}</h4>
+  <table class="table">,
+    <thead>
+      <tr>
+        <th>Products</th>
+        <th>Price</th>
+        <th>Quantity</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for product in order.products.all %}
+        <tr>
+          <td>{{ product.name }}</td>
+          <td>{{ product.price }}</td>
+          <td>{{ order.status }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% endfor %}
+</div>
+{% endblock %}

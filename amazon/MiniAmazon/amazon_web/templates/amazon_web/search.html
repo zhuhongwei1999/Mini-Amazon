@@ -1,0 +1,109 @@
+{% extends 'users/base.html' %}
+{% load custom_tags %}
+
+
+{% block content %}
+
+  <h1>Searching for Items</h1>
+
+  <form method="get" action="{% url 'search' %}">
+    <div class="form-row align-items-center">
+      <div class="col-sm-3 my-1">
+        <label class="sr-only" for="search-name">Search by name</label>
+        <input type="text" class="form-control" id="search-name" placeholder="Search by name" name="name" value="{{ request.GET.name }}">
+      </div>
+      <div class="col-sm-3 my-1">
+        <label class="sr-only" for="search-category">Search by category</label>
+        <select class="form-control" id="search-category" name="category">
+          <option value="">All categories</option>
+          {% for category in categories %}
+          <option value="{{ category }}">{{ category }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="col-sm-3 my-1">
+        <label class="sr-only" for="search-price">Search by price</label>
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text">$</span>
+          </div>
+          <input type="text" class="form-control" id="search-price-min" placeholder="Lowest" name="price-min">
+          <div class="input-group-prepend input-group-append">
+            <span class="input-group-text">to</span>
+          </div>
+          <input type="text" class="form-control" id="search-price-max" placeholder="Highest" name="price-max">
+        </div>
+      </div>
+      <div class="col-sm-2 my-1">
+        <label class="sr-only" for="sort-by">Sort by</label>
+        <select class="form-control" id="sort-by" name="sort-by">
+          <option value="">Sort by</option>
+          <optgroup label="Price">
+            <option value="price_asc" {% if request.GET.sort_by == 'price_asc' %}selected{% endif %}>Price Low to High</option>
+            <option value="price_desc" {% if request.GET.sort_by == 'price_desc' %}selected{% endif %}>Price High to Low</option>
+          </optgroup>
+          <optgroup label="Sales">
+            <option value="sales_asc" {% if request.GET.sort_by == 'sales_asc' %}selected{% endif %}>Sales Low to High</option>
+            <option value="sales_desc" {% if request.GET.sort_by == 'sales_desc' %}selected{% endif %}>Sales High to Low</option>
+          </optgroup>
+        </select>
+        
+      </div>
+      <div class="col-auto my-1">
+        <button type="submit" class="btn btn-primary">Search</button>
+      </div>
+    </div>
+  </form>
+  
+  
+
+  <div id="accordion1">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Price</th>
+          <th>Category</th>
+          <th>Store</th>
+          <th>Sales</th>
+          <th>Delivery</th>
+          <th>Stars</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for product in products %}
+          <tr>
+            <td>{{ product.name }}</td>
+            <td>{{ product.price }}</td>
+            <td>{{ product.category }}</td>
+            <td>{{ product.store }}</td>
+            <td>{{ product.sales }}</td>
+            <td>{{ product.delivery }}</td>
+            <td>{{ avg_stars|get_item:product.product_id|floatformat:1}}</td>
+            {% comment %} <td>{{ avg_stars.product.product_id }}</td> {% endcomment %}
+            <td>
+              <form action="{% url 'handle_cart' product_id=product.product_id %}" method="POST" data-product-name="{{ product.name }}">
+                {% csrf_token %}
+                <input type="hidden" name="product_id" value="{{ product.product_id }}">
+                <input type="number" name="quantity" value="1" min="1" max="10" style="width: 50px;">
+                <button type="submit" name="action" value="buy" class="btn btn-primary" onclick="return confirmBuy(this.form);">Buy</button>
+                <button type="submit" name="action" value="add_to_cart" class="btn btn-primary">Add to Cart</button>
+              </form>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+
+  <script>
+    function confirmBuy(form) {
+      var productName = form.getAttribute('data-product-name');
+      var quantity = form.querySelector('input[name="quantity"]').value;
+      var message = 'Are you sure you want to buy ' + quantity + ' x ' + productName + '?';
+      return confirm(message);
+    }
+  </script>
+
+{% endblock %}

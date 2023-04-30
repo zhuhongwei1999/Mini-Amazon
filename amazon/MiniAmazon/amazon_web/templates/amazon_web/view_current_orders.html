@@ -1,0 +1,65 @@
+{% extends 'users/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="container">
+  <h1 class="mt-4 mb-4">My Orders</h1>
+  {% if orders %}
+    {% for order in orders %}
+      <div class="card mb-4">
+        <div class="card-header">
+          <h3 class="mb-0">Order No. {{ order.tracking_num }}</h3>
+          <p class="mb-0">Status: 
+            {% if order.status == 'requesting_inventory' %}
+              packing
+            {% elif order.status == 'inventory_arrived' %}
+              packing
+            {% elif order.status == 'booked_truck' %}
+              packing
+            {% elif order.status == 'truck_arrived' %}
+              packing
+            {% elif order.status == 'loading' %}
+              packing
+            {% elif order.status == 'loaded' %}
+              packing
+            {% else %}
+              {{ order.status }}
+            {% endif %}
+          </p>
+          <p class="mb-0">Total Price: {{ order.total_price }}</p>
+          <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#order-items-{{ order.tracking_num }}" aria-expanded="false" aria-controls="order-items-{{ order.tracking_num }}">
+            Details
+          </button>
+        </div>
+        <div class="collapse" id="order-items-{{ order.tracking_num }}">
+          <div class="card-body">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Product Name</th>
+                  <th>Quantity</th>
+                  <th>Price</th>
+                  <th>Subtotal</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for item in order.order_items.all %}
+                  <tr>
+                    <td>{{ item.product.name }}</td>
+                    <td>{{ item.quantity }}</td>
+                    <td>{{ item.product.price }}</td>
+                    <td>{{ item.subtotal }}</td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  {% else %}
+    <p>No orders found.</p>
+  {% endif %}
+</div>
+{% endblock %}

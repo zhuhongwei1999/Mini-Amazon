@@ -1,0 +1,47 @@
+version: '2'
+
+services:
+  db:
+      image: postgres
+      environment:
+        - POSTGRES_DB=amz
+        - POSTGRES_USER=hz255
+        - POSTGRES_PASSWORD=hongwei
+      volumes:
+            - data-volume:/var/lib/postgresql/data
+  web-init:
+      build: ./MiniAmazon
+      command: /code/initserver.sh
+      volumes:
+        - ./MiniAmazon:/code
+      depends_on:
+        - db
+  web:
+      build: ./MiniAmazon
+      user: nobody
+      command: /code/runserver.sh
+      volumes:
+        - ./MiniAmazon:/code
+      expose:
+        - "8000"
+      depends_on:
+        - web-init
+  nginx:
+     image: nginx:latest
+     ports:
+       - "8000:8000"
+     volumes:
+       - ./nginx/config:/etc/nginx/conf.d
+     depends_on:
+       - web
+  backend:
+      build: ./MiniAmazon
+      depends_on:
+       - db
+      command: /code/backend_server.sh
+      volumes:
+       - ./MiniAmazon:/code
+
+
+volumes:
+   data-volume:

@@ -1,0 +1,8 @@
+Django==4.1.5
+psycopg2
+jsonfield
+pytz==2022.7.1
+django_jsonfield==1.4.1
+crispy_bootstrap5
+Pillow
+protobuf==3.20.0
