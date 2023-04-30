@@ -9,8 +9,8 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'MiniAmazon.settings')
 application = get_wsgi_application()
 from amazon_web.models import *
 
-WORLD = {'hostname': "vcm-31112.vm.duke.edu", 'port': 23456}
-UPS = {'hostname': "vcm-30676.vm.duke.edu", 'port': 22222}
+WORLD = {'hostname': "vcm-30481.vm.duke.edu", 'port': 23456}
+UPS = {'hostname': "vcm-30481.vm.duke.edu", 'port': 22222}
 
 if __name__ == '__main__':
     socket_world = socket.socket(socket.AF_INET, socket.SOCK_STREAM)

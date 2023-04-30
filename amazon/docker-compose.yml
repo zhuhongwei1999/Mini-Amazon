@@ -4,9 +4,9 @@ services:
   db:
       image: postgres
       environment:
-        - POSTGRES_DB=amz
-        - POSTGRES_USER=hz255
-        - POSTGRES_PASSWORD=hongwei
+        - POSTGRES_DB=amazon
+        - POSTGRES_USER=postgres
+        - POSTGRES_PASSWORD=passw0rd
       volumes:
             - data-volume:/var/lib/postgresql/data
   web-init:
@@ -38,10 +38,10 @@ services:
       build: ./MiniAmazon
       depends_on:
        - db
+       - web
       command: /code/backend_server.sh
       volumes:
        - ./MiniAmazon:/code
-
 
 volumes:
    data-volume:

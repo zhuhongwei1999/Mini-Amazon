@@ -96,13 +96,24 @@ WSGI_APPLICATION = 'MiniAmazon.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'amz',
-        'USER': 'hz255',
-        'PASSWORD': 'hongwei',
+        'NAME': 'amazon',
+        'USER': 'postgres',
+        'PASSWORD': 'passw0rd',
         'HOST': 'db',
         'PORT': '5432',
     }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'amz',
+#         'USER': 'hz255',
+#         'PASSWORD': 'hongwei',
+#         'HOST': '127.0.0.1',
+#         'PORT': '5432',
+#     }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators

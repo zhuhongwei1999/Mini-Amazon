@@ -35,4 +35,4 @@ class Command(BaseCommand):
             Product.objects.create(product_id = 24, name='Coffee table', price=128.0, store='WLIVE', category='Home/DIY', sales=4563, delivery='Free Delivery')
             Product.objects.create(product_id = 25, name='Food Container', price=39.0, store='Amazon', category='Home/DIY', sales=558, delivery='Free Delivery')
         if not Warehouse.objects.exists():
-            Warehouse.objects.create(whid = 1,x = 10, y=10)
+            Warehouse.objects.create(whid = 1,x = 10, y = 10)
