@@ -9,8 +9,9 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'MiniAmazon.settings')
 application = get_wsgi_application()
 from amazon_web.models import *
 
-WORLD = {'hostname': "vcm-30481.vm.duke.edu", 'port': 23456}
-UPS = {'hostname': "vcm-30481.vm.duke.edu", 'port': 22222}
+# TODO: Please change the World and UPS hostname and port number here
+WORLD = {'hostname': "vcm-31112.vm.duke.edu", 'port': 23456}
+UPS = {'hostname': "vcm-30676.vm.duke.edu", 'port': 22222}
 
 if __name__ == '__main__':
     socket_world = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -24,7 +25,7 @@ if __name__ == '__main__':
     send_msg(socket_ups, u_connect)
     print('World ID send successfully.')
     
-    Order.objects.all().update(status='checked_out', truck_id = None)
+    # Order.objects.all().update(status='checked_out', truck_id = None)
     world_send = threading.Thread(target = sendToWorld, args = (socket_world,))
     world_recv = threading.Thread(target = recvFromWorld, args = (socket_world,))
     ups_send = threading.Thread(target = sendToUPS, args = (socket_ups,))
